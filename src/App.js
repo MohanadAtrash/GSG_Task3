@@ -1,25 +1,51 @@
-import logo from './logo.svg';
+import React, { Component } from "react";
+import List from './List.js'
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+
+  constructor(props) {
+    let arr = [{ name: 'Ahmad', age: 30 }, 
+    { name: 'Yousef', age: 12 },
+    { name: 'Shatha', age: 14 },
+    { name: 'Rana', age: 22 },
+    { name: 'Osama', age: 22 },
+    { name: 'Ahmad', age: 38 }
+    ];
+
+    let age = {}
+    let name = {}
+    arr.forEach(element => { age[element.age] = 1; name[element.name] = 1 });
+    age = Object.keys(age);
+    name = Object.keys(name);
+
+    super(props)
+    this.state = {
+      "age": age,
+      "name": name
+    }
+  }
+
+  deleteItem() {
+    if (this.state.age) {
+      this.state.age.pop();
+    }
+    if (this.state.name) {
+      this.state.name.pop();
+    }
+
+    this.setState({ "": "" })
+  }
+
+  render() {
+    return (
+      <div>
+        <List name={"Names"} item={this.state.name} />
+        <List name={"Ages"} item={this.state.age} />
+        <button onClick={this.deleteItem.bind(this)} className="buttonClass">DELETE</button>
+      </div>
+    )
+  }
 }
 
-export default App;
+
